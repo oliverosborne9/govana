@@ -9,6 +9,7 @@ import Keyboard from './Keyboard';
 import {MessageHandler, WinHandler} from './HandlerFormats';
 import {sampleData, type Question} from './Data';
 import setStreak from './WinTracker';
+import Modal from './Modal';
 
 const App = () => {
 	const [slides, setSlides] = useState<Question[]>(Array(5));
@@ -169,6 +170,7 @@ const App = () => {
 						</div>
 						<div className='flex'>
 							<GameTimer startDate={gameStart} />
+							<Modal />
 						</div>
 					</div>
 					<div className='min-h-full flex py-12 px-2 sm:px-6 lg:px-8'>
