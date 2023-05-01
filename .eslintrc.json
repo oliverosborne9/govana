@@ -28,5 +28,10 @@
   "ignorePatterns": ["vite.config.ts", "src/vite-env.d.ts", "dist"],
   "rules": {
     "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
