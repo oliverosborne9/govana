@@ -15,7 +15,7 @@ function EnterWordForm(props: EnterWordFormProps) {
     = props.currEntry.toLowerCase() === props.correctWord ? 'text-white' : '';
 
 	return (
-		<div className='flex justify-center items-center'>
+		<div className='flex p-1 justify-center items-center'>
 			{letters.map((letter, letterIndex) => (
 				<div
 					className={

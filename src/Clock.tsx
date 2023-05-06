@@ -22,3 +22,4 @@ function GameTimer(props: GameTimerProps) {
 }
 
 export default GameTimer;
+export type {GameTimerProps};

@@ -5,7 +5,7 @@ type InfoSectionProps = {
 
 function InfoSection(props: InfoSectionProps) {
 	return (
-		<div className='flex items-center justify-between'>
+		<div className='flex items-center justify-between text-sm'>
 			<div className='flex'>
 				{'Aα'}
 				<p className='ml-2 block font-medium text-indigo-600  hover:text-indigo-500'>

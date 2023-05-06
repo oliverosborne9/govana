@@ -58,10 +58,10 @@ function Keyboard(props: KeyboardProps) {
 	}
 
 	return (
-		<div className='flex-col flex justify-center items-center'>
-			<div className='flex'>{keys1.map(mapKey)}</div>
-			<div className='flex'>{keys2.map(mapKey)}</div>
-			<div className='flex'>
+		<div className='pb-2 px-1'>
+			<div className='flex justify-center'>{keys1.map(mapKey)}</div>
+			<div className='flex justify-center'>{keys2.map(mapKey)}</div>
+			<div className='flex justify-center'>
 				<Key
 					keyVal={'CLUE'}
 					special={true}

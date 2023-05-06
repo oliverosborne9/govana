@@ -10,6 +10,7 @@ import {MessageHandler, WinHandler} from './HandlerFormats';
 import {sampleData, type Question} from './Data';
 import setStreak from './WinTracker';
 import Modal from './Modal';
+import TopBar from './TopBar';
 
 const App = () => {
 	const [slides, setSlides] = useState<Question[]>(Array(5));
@@ -152,29 +153,12 @@ const App = () => {
 
 	return (
 		<div>
-			<div className='flex items-center h-screen' tabIndex={0}>
+			<div className='flex h-screen' tabIndex={0}>
 				<NavigationArrow value={'⟨'} onScrollerClick={goToPrevious} />
-				<div className='w-10/12 justify-items-center z-1'>
-					<div className='flex items-center justify-between'>
-						<div className='flex'>
-							<p className='font-mono font-bold text-fuchsia-600'>{'GuessThe'}</p>
-							<div className='box font-mono font-bold text-fuchsia-600'>
-								<ul>
-									<li className='item-1'>LemonCurd</li>
-									<li className='item-2'>Word</li>
-									<li className='item-4'>Songbird</li>
-									<li className='item-4'>Absurd</li>
-									<li className='item-5'>LemonCurd</li>
-								</ul>
-							</div>
-						</div>
-						<div className='flex'>
-							<GameTimer startDate={gameStart} />
-							<Modal />
-						</div>
-					</div>
-					<div className='min-h-full flex py-12 px-2 sm:px-6 lg:px-8'>
-						<div className='space-y-4 w-full max-w-sm mx-auto'>
+				<div className='w-10/12 z-1'>
+					<div className='h-full items-center flex py-2 px-2'>
+						<TopBar startDate={gameStart}/>
+						<div className='space-y-2 w-full max-w-sm mx-auto'>
 							<ImageBox url={slides[currQuestionNum].url} />
 							<div className='columns-5'>
 								{answers.map((correct, questionIndex) => (
@@ -194,18 +178,21 @@ const App = () => {
 								numCharacters={slides[currQuestionNum].word.length}
 								numSyllables={slides[currQuestionNum].syllables}
 							/>
-							<EnterWordForm
-								currEntry={enteredAnswers[currQuestionNum]}
-								correctWord={slides[currQuestionNum].word}
-							/>
-							<Keyboard
-								addLetter={addLetter}
-								removeLetter={removeLetter}
-								setClue={setClue}
-								isCorrect={isCurrCorrect()}
-								correctWord={slides[currQuestionNum].word}
-								isClue={isCurrClue()}
-							/>
+							<div className='absolute inset-x-0 bottom-0'>
+								<EnterWordForm
+									currEntry={enteredAnswers[currQuestionNum]}
+									correctWord={slides[currQuestionNum].word}
+								/>
+								<Keyboard
+									addLetter={addLetter}
+									removeLetter={removeLetter}
+									setClue={setClue}
+									isCorrect={isCurrCorrect()}
+									correctWord={slides[currQuestionNum].word}
+									isClue={isCurrClue()}
+								/>
+							</div>
+							<div className='h-40'></div>
 						</div>
 					</div>
 				</div>
