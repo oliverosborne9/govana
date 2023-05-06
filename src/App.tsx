@@ -4,12 +4,10 @@ import InfoSection from './Clues';
 import ImageBox from './Image';
 import {useEffect, useState} from 'react';
 import QuestionCard from './Card';
-import GameTimer from './Clock';
 import Keyboard from './Keyboard';
 import {MessageHandler, WinHandler} from './HandlerFormats';
 import {sampleData, type Question} from './Data';
 import setStreak from './WinTracker';
-import Modal from './Modal';
 import TopBar from './TopBar';
 
 const App = () => {
@@ -87,7 +85,9 @@ const App = () => {
 		} else if (event.key === 'ArrowRight') {
 			goToNext();
 		} else if (event.key === '?') {
-			setClue();
+			if (!isCurrCorrect()) {
+				setClue();
+			}
 		} else if (event.key === 'Backspace' || event.key === 'Delete') {
 			if (!isCurrCorrect()) {
 				removeLetter();
