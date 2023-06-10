@@ -6,9 +6,15 @@ import {useEffect, useState} from 'react';
 import QuestionCard from './Card';
 import Keyboard from './Keyboard';
 import {MessageHandler, WinHandler} from './HandlerFormats';
-import {sampleData, type Question} from './Data';
 import setStreak from './WinTracker';
 import TopBar from './TopBar';
+
+type Question = {
+	frequency: number;
+	syllables: number;
+	url: string;
+	word: string;
+};
 
 const App = () => {
 	const [slides, setSlides] = useState<Question[]>(Array(5));
@@ -21,29 +27,40 @@ const App = () => {
 	const [clues, setClues] = useState<boolean[]>(Array(5).fill(false));
 	const [enteredAnswers, setEnteredAnswers] = useState<string[]>(Array(5).fill(''));
 
-	function loadSet(slides: Question[]) {
+	async function loadSet(slides: Question[]) {
+		// Preload all images so that they are not first loaded when navigated to
+		const images = slides.map(async slide =>
+			new Promise((resolve, reject) => {
+				const img = new Image();
+				img.src = slide.url;
+				img.onload = () => {
+					resolve(img);
+				};
+
+				img.onerror = () => {
+					reject();
+				};
+			}));
+		await Promise.all(images);
+
+		// Set the questions, defaulting all answers to incorrect
 		setSlides(slides);
 		setAnswers(Array(slides.length).fill(false));
 	}
 
 	useEffect(() => {
 		const backend = import.meta.env.VITE_BACKEND_API;
-		if (backend.toLowerCase() === 'local') {
-			loadSet(sampleData);
-			setLoading(false);
-		} else {
-			fetch(`http://${backend}/api/words/today`)
-				.then(async response => response.json())
-				.then(loadSet)
-				.catch(() => {
-					setError(true);
-				})
-				.finally(() => {
-					setLoading(false);
-				});
-		}
-
-		setGameStart(Date.now());
+		const backendLoc = (backend.toLowerCase() === 'local') ? 'dev/sampleData.json' : `${backend}/api/words/today`;
+		fetch(backendLoc)
+			.then(async response => response.json())
+			.then(loadSet)
+			.catch(() => {
+				setError(true);
+			})
+			.finally(() => {
+				setLoading(false);
+				setGameStart(Date.now());
+			});
 	}, []);
 
 	useEffect(() => {
